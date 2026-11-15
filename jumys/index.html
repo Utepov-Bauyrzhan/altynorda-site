@@ -468,8 +468,10 @@ const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&g
 window.addEventListener("hashchange",route);
 function route(){if(location.hash==="#natizheler")renderAdmin();else render()}
 
-function header(){return`<div class="topbar"><a class="tb-brand" href="/"><img src="../img/logo.jpg" alt="ALTYN ORDA"><span><b>ALTYN ORDA</b><small>${L("КИІМ ДҮКЕНІ","МАГАЗИН ОДЕЖДЫ")}</small></span></a>
- <div class="tb-right"><div class="lang"><button class="${lang==="kz"?"on":""}" onclick="setLang('kz')">Қаз</button><button class="${lang==="ru"?"on":""}" onclick="setLang('ru')">Рус</button></div></div></div>`}
+function header(){return`<div class="top"><div class="lang">
+ <button class="${lang==="kz"?"on":""}" onclick="setLang('kz')">Қаз</button>
+ <button class="${lang==="ru"?"on":""}" onclick="setLang('ru')">Рус</button></div>
+ <div class="hero"><img src="../img/logo.jpg" alt="ALTYN ORDA"><div><div class="h-name">ALTYN ORDA</div><div class="h-sub">${L("КИІМ ДҮКЕНІ","МАГАЗИН ОДЕЖДЫ")}</div><div class="h-loc">${L("Құрманғазы ауданы","Курмангазинский район")}</div></div></div></div>`}
 function setLang(l){if(step==="cv")grabCv();lang=l;render()}
 
 const SAVE_KEY="ao_jumys_v1";
@@ -500,17 +502,12 @@ const RMETA={seller:{ic:"🛍",kz:"Клиентке киім таңдауға к
  smm:{ic:"📱",kz:"Instagram, TikTok, фото-видео контент және онлайн сату",ru:"Instagram, TikTok, фото- и видеоконтент, онлайн-продажи"},
  admin:{ic:"👑",kz:"Команда құру, сатушыларды үйрету, сатылымды өсіру",ru:"Подбор и обучение команды, рост продаж, контент"}};
 const SAL={};
-function renderIntro(){app.className="wrap wide";
- const steps=[[L("Лауазым","Должность"),L("таңдаңыз","выберите")],[L("Вакансия","Вакансия"),L("танысыңыз","ознакомьтесь")],[L("Анкета","Анкета"),L("толтырыңыз","заполните")],[L("Тест","Тест"),L("44 сұрақ","44 вопроса")]];
- app.innerHTML=header()+`<section class="jhero"><div class="eyebrow">${L("Вакансиялар","Вакансии")}</div>
- <h1>${L("ALTYN ORDA командасына қосылыңыз","Присоединяйтесь к команде ALTYN ORDA")}</h1>
- <p>${L("Бізге адал, жауапкершілігі жоғары және өсуге ұмтылатын адамдар керек. Тәжірибеңіз аз болса да, үйренуге дайын болсаңыз — өтініш беріңіз.","Нам нужны честные, ответственные люди, которые хотят расти. Даже если опыта мало, но вы готовы учиться — подавайте заявку.")}</p>
- <div class="jchips"><span>⏱ ${L("шамамен 10 минут","примерно 10 минут")}</span><span>📍 ${L("Құрманғазы селосы, Шақу Сәтеков к-сі, 14","с. Курмангазы, ул. Шаку Сатекова, 14")}</span><span>🗓 ${L("Дс–Сб 09:00–18:30, Жс 09:00–13:00","Пн–Сб 09:00–18:30, Вс 09:00–13:00")}</span></div></section>
- <div class="jsteps">${steps.map((x,i)=>`<div class="js ${i===0?"on":""}"><i>${i+1}</i><div><b>${x[0]}</b><small>${x[1]}</small></div></div>`).join("")}</div>
- <h2 class="jh2">${L("Қай лауазымға өтініш бересіз?","На какую должность вы претендуете?")}</h2>
- <div class="rgrid">${RKEYS.map(k=>`<button class="rcard ${role===k?"sel":""}" onclick="chooseRole('${k}')"><span class="ric">${RMETA[k].ic}</span><span class="rbody"><b>${L(ROLES[k].kz,ROLES[k].ru)}</b><small>${L(RMETA[k].kz,RMETA[k].ru)}</small><span class="rsal">💰 ${SAL[k]?L(SAL[k][0],SAL[k][1]):L("Жалақы сұхбатта келісіледі","Зарплата — по итогам собеседования")}</span></span><span class="rgo">${L("Вакансияны көру","Смотреть вакансию")} →</span></button>`).join("")}</div>
- <p class="jnote">${L("Дұрыс не бұрыс жауап жоқ — сұрақтарға шынайы жауап беріңіз. Нәтиже WhatsApp арқылы бізге жіберіледі.","Правильных и неправильных ответов нет — отвечайте честно. Результат отправляется нам через WhatsApp.")}</p>
- <footer><a href="/">← ${L("Сайтқа оралу","Вернуться на сайт")}</a></footer>`}
+function renderIntro(){app.innerHTML=header()+`<div class="card">
+ <h1>${L("ALTYN ORDA-ға жұмысқа өтініш","Анкета на работу в ALTYN ORDA")}</h1>
+ <p class="mut">${L("Екі қадам: 1) қысқа резюме, 2) мінез бен жеке қасиеттер туралы 44 сұрақ. Барлығы шамамен 10 минут. Дұрыс не бұрыс жауап жоқ — шынайы жауап беріңіз.","Два шага: 1) короткое резюме, 2) 44 вопроса о характере и личных качествах. Всего примерно 10 минут. Правильных и неправильных ответов нет — отвечайте честно.")}</p>
+ <label>${L("Қай лауазымға өтініш бересіз?","На какую должность вы претендуете?")}</label>
+ <div class="opts">${RKEYS.map(k=>`<button class="opt ${role===k?"sel":""}" onclick="chooseRole('${k}')">${L(ROLES[k].kz,ROLES[k].ru)}</button>`).join("")}</div></div>
+ <footer><a href="/">${L("← Сайтқа оралу","← Вернуться на сайт")}</a></footer>`}
 function chooseRole(k){role=k;step="vac";render();window.scrollTo(0,0)}
 
 /* ===================== VACANCIES ===================== */
