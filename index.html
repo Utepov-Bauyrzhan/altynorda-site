@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ALTYN ORDA — отбасылық киім дүкені, Құрманғазы</title>
+<meta name="description" content="ALTYN ORDA — бүкіл отбасыға арналған киім дүкені. Құрманғазы ауылы, Шақу Сәтеков көшесі, 14. Ерлер, әйелдер, балалар, жасөспірімдер және нәрестелер киімі.">
+<meta property="og:title" content="ALTYN ORDA — отбасылық киім дүкені">
+<meta property="og:description" content="Бүкіл отбасыға арналған киім. Құрманғазы ауылы, Шақу Сәтеков көшесі, 14.">
+<meta property="og:image" content="img/store.jpg">
+<link rel="icon" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0e2238;--navy2:#163352;--gold:#c9a24a;--gold2:#e7cf8d;--teal:#1d7f8c;--ink:#16151a;--mut:#626a76;--bg:#f8f6f1;--line:#e6e0d3}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;line-height:1.55}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+/* header */
+.hdr{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.hdr .wrap{display:flex;align-items:center;gap:16px;height:72px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand img{width:48px;height:48px;border-radius:50%}
+.brand b{font-family:Montserrat,sans-serif;font-weight:900;font-size:20px;line-height:1;display:block}
+.brand small{font-family:Montserrat,sans-serif;font-weight:800;font-size:10px;letter-spacing:.16em;color:var(--mut)}
+nav{margin-left:auto;display:flex;gap:22px;font-size:15px;font-weight:500}
+nav a{text-decoration:none;color:#333}
+nav a:hover{color:var(--teal)}
+.lang{display:flex;gap:4px;margin-left:8px}
+.lang button{border:1px solid var(--line);background:#fff;padding:6px 10px;border-radius:8px;font:inherit;font-size:13px;cursor:pointer}
+.lang button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.burger{display:none;margin-left:auto;border:0;background:none;font-size:26px;cursor:pointer;padding:6px}
+/* hero */
+.hero{background:radial-gradient(1200px 500px at 85% 20%,#1f4a6e 0,transparent 60%),linear-gradient(160deg,var(--navy) 0,var(--navy2) 100%);color:#fff;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding-top:64px;padding-bottom:72px}
+.eyebrow{display:inline-block;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold2);border:1px solid #c9a24a66;border-radius:30px;padding:6px 14px}
+.hero h1{font-family:Montserrat,sans-serif;font-weight:900;font-size:52px;line-height:1.05;margin:18px 0 16px}
+.hero h1 span{color:var(--gold)}
+.hero p{font-size:18px;color:#d5dde6;max-width:520px;margin:0 0 28px}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 22px;border-radius:12px;font-weight:600;font-size:15px;text-decoration:none;border:0;cursor:pointer}
+.btn.gold{background:var(--gold);color:#1b1404}
+.btn.gold:hover{background:var(--gold2)}
+.btn.line{border:1px solid #ffffff55;color:#fff}
+.btn.line:hover{background:#ffffff14}
+.btn.dark{background:var(--navy);color:#fff}
+.btn.wa{background:#1fa855;color:#fff}
+.hero-img{justify-self:center;width:100%;max-width:420px;aspect-ratio:1;border-radius:50%;box-shadow:0 30px 80px #0008, 0 0 0 6px #c9a24a33}
+.facts{display:flex;flex-wrap:wrap;gap:28px;margin-top:36px;font-size:14px;color:#c4cfdb}
+.facts b{display:block;color:#fff;font-size:16px}
+/* sections */
+section{padding:80px 0}
+.sec-h{max-width:640px;margin-bottom:36px}
+.sec-h .k{color:var(--teal);font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase}
+.sec-h h2{font-family:Montserrat,sans-serif;font-weight:800;font-size:34px;line-height:1.15;margin:8px 0 10px}
+.sec-h p{color:var(--mut);margin:0;font-size:17px}
+.grid{display:grid;gap:16px}
+.cats{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+.cat{display:flex;flex-direction:column;gap:10px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;text-decoration:none;transition:.15s}
+.cat:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 10px 30px #0e22380f}
+.cat .ic{font-size:30px}
+.cat b{font-size:17px}
+.cat small{color:var(--mut);font-size:14px}
+.cat .go{margin-top:auto;color:var(--teal);font-weight:600;font-size:14px}
+.cat.all{background:var(--navy);color:#fff;border-color:var(--navy)}
+.cat.all small{color:#c4cfdb}.cat.all .go{color:var(--gold2)}
+.alt{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.feat{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+.f{padding:22px;border-radius:16px;background:var(--bg);border:1px solid var(--line)}
+.f .ic{width:44px;height:44px;border-radius:12px;background:#fff;display:grid;place-items:center;font-size:22px;border:1px solid var(--line)}
+.f b{display:block;font-size:17px;margin:14px 0 6px}
+.f p{margin:0;color:var(--mut);font-size:15px}
+.steps{counter-reset:s;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+.step{position:relative;background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 22px 22px 70px}
+.step:before{counter-increment:s;content:counter(s);position:absolute;left:20px;top:20px;width:36px;height:36px;border-radius:50%;background:var(--gold);color:#1b1404;font-weight:800;display:grid;place-items:center;font-family:Montserrat,Inter,sans-serif}
+.step b{display:block;margin-bottom:4px}
+.step p{margin:0;color:var(--mut);font-size:15px}
+.rules{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 26px;margin-top:20px}
+.rules ul{margin:8px 0 0;padding-left:20px}
+.rules li{margin:4px 0}
+/* contacts */
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px}
+.row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border:0}
+.row .ic{font-size:20px;width:28px;flex:none}
+.row small{display:block;color:var(--mut);font-size:13px}
+.row b{font-weight:600}
+.hours{width:100%;border-collapse:collapse}
+.hours td{padding:12px 0;border-bottom:1px solid var(--line)}
+.hours td:last-child{text-align:right;font-weight:600}
+.hours tr:last-child td{border:0}
+.socials{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.soc{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;border:1px solid var(--line);text-decoration:none;font-weight:600;font-size:14px;background:#fff}
+.soc:hover{border-color:var(--gold)}
+/* jobs */
+.jobs{background:linear-gradient(160deg,var(--navy) 0,var(--navy2) 100%);color:#fff}
+.jobs .sec-h .k{color:var(--gold2)}.jobs .sec-h p{color:#c4cfdb}
+.jgrid{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:start}
+.perks{display:grid;gap:12px}
+.perk{display:flex;gap:14px;background:#ffffff0d;border:1px solid #ffffff1f;border-radius:14px;padding:16px 18px}
+.perk .ic{font-size:22px}
+.perk b{display:block}
+.perk span{color:#c4cfdb;font-size:15px}
+.apply{background:#fff;color:var(--ink);border-radius:18px;padding:26px}
+.apply h3{font-family:Montserrat,Inter,sans-serif;font-weight:800;font-size:22px;margin:0 0 8px}
+.apply p{color:var(--mut);margin:0 0 16px;font-size:15px}
+.apply ol{padding-left:20px;margin:0 0 20px;font-size:15px}
+.apply ol li{margin:6px 0}
+.apply .btn{width:100%;justify-content:center}
+footer{background:#0a1828;color:#9fb0c2;font-size:14px;padding:36px 0}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 30px;justify-content:space-between;align-items:center}
+footer b{color:#fff;font-family:Montserrat,Inter,sans-serif;font-weight:900}
+.wa-float{position:fixed;right:18px;bottom:18px;z-index:30;width:58px;height:58px;border-radius:50%;background:#1fa855;display:grid;place-items:center;box-shadow:0 10px 30px #0004}
+.wa-float svg{width:30px;height:30px;fill:#fff}
+@media(max-width:900px){
+ nav{display:none;position:absolute;top:72px;left:0;right:0;background:#fff;flex-direction:column;gap:0;border-bottom:1px solid var(--line)}
+ nav.open{display:flex}
+ nav a{padding:14px 20px;border-top:1px solid var(--line)}
+ .burger{display:block}
+ .lang{margin-left:0}
+ .hero .wrap{grid-template-columns:1fr;padding-top:36px;padding-bottom:48px;gap:28px}
+ .hero h1{font-size:38px}
+ .hero-img{max-width:300px;order:-1}
+ .contact,.jgrid{grid-template-columns:1fr}
+ section{padding:56px 0}
+ .cats{grid-template-columns:1fr 1fr;gap:12px}
+ .cat{padding:16px}
+ .cat small{font-size:13px}
+ .brand b{font-size:17px;white-space:nowrap}
+ .brand img{width:42px;height:42px}
+ .hdr .wrap{gap:10px}
+ .sec-h h2{font-size:28px}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr"><div class="wrap">
+ <a class="brand" href="#top"><img src="img/logo.jpg" alt="ALTYN ORDA"><span><b>ALTYN ORDA</b><small data-kz="КИІМ ДҮКЕНІ" data-ru="МАГАЗИН ОДЕЖДЫ">КИІМ ДҮКЕНІ</small></span></a>
+ <nav id="nav">
+  <a href="#catalog" data-kz="Каталог" data-ru="Каталог">Каталог</a>
+  <a href="#about" data-kz="Біз туралы" data-ru="О нас">Біз туралы</a>
+  <a href="#order" data-kz="Тапсырыс" data-ru="Заказ">Тапсырыс</a>
+  <a href="#contacts" data-kz="Байланыс" data-ru="Контакты">Байланыс</a>
+  <a href="#jobs" data-kz="Жұмыс" data-ru="Вакансии">Жұмыс</a>
+ </nav>
+ <div class="lang"><button data-l="kz" class="on">Қаз</button><button data-l="ru">Рус</button></div>
+ <button class="burger" aria-label="Мәзір" onclick="document.getElementById('nav').classList.toggle('open')">☰</button>
+</div></header>
+
+<main id="top">
+<div class="hero"><div class="wrap">
+ <div>
+  <span class="eyebrow" data-kz="Құрманғазы ауданы" data-ru="Курмангазинский район">Құрманғазы ауданы</span>
+  <h1 data-kz="Бүкіл отбасыға арналған <span>киім</span>" data-ru="Одежда для <span>всей семьи</span>">Бүкіл отбасыға арналған <span>киім</span></h1>
+  <p data-kz="Нәрестеден атаға дейін — ерлер, әйелдер, балалар мен жасөспірімдерге арналған киім, аяқ киім, сөмке және үй текстилі бір дүкенде." data-ru="От малышей до бабушек и дедушек — одежда, обувь, сумки и домашний текстиль для мужчин, женщин, детей и подростков в одном магазине.">Нәрестеден атаға дейін — ерлер, әйелдер, балалар мен жасөспірімдерге арналған киім, аяқ киім, сөмке және үй текстилі бір дүкенде.</p>
+  <div class="btns">
+   <a class="btn gold" href="https://altynorda.moysklad.shop" target="_blank" rel="noopener" data-kz="🛍 Каталогты ашу" data-ru="🛍 Открыть каталог">🛍 Каталогты ашу</a>
+   <a class="btn line" href="https://wa.me/77770198800" target="_blank" rel="noopener" data-kz="WhatsApp-қа жазу" data-ru="Написать в WhatsApp">WhatsApp-қа жазу</a>
+  </div>
+  <div class="facts">
+   <div><b data-kz="Шақу Сәтеков к-сі, 14" data-ru="ул. Шаку Сатекова, 14">Шақу Сәтеков к-сі, 14</b><span data-kz="Құрманғазы ауылы" data-ru="село Курмангазы">Құрманғазы ауылы</span></div>
+   <div><b>09:00 – 18:30</b><span data-kz="Дүйсенбі – Сенбі" data-ru="Понедельник – Суббота">Дүйсенбі – Сенбі</span></div>
+   <div><b>+7 777 019 88 00</b><span>WhatsApp</span></div>
+  </div>
+ </div>
+ <img class="hero-img" src="img/store.jpg" alt="ALTYN ORDA дүкені">
+</div></div>
+
+<section id="catalog"><div class="wrap">
+ <div class="sec-h"><div class="k" data-kz="Онлайн каталог" data-ru="Онлайн-каталог">Онлайн каталог</div>
+  <h2 data-kz="Бөлімді таңдап, тауарды қараңыз" data-ru="Выберите отдел и смотрите товары">Бөлімді таңдап, тауарды қараңыз</h2>
+  <p data-kz="Каталогта дүкенде бар тауарлар ғана көрсетіледі. Ұнағанын таңдап, тапсырыс беріңіз." data-ru="В каталоге только товары в наличии. Выберите понравившееся и оформите заказ.">Каталогта дүкенде бар тауарлар ғана көрсетіледі. Ұнағанын таңдап, тапсырыс беріңіз.</p></div>
+ <div class="grid cats">
+  <a class="cat all" href="https://altynorda.moysklad.shop" target="_blank" rel="noopener"><span class="ic">🛍</span><b data-kz="Барлық тауар" data-ru="Все товары">Барлық тауар</b><small data-kz="Толық каталог" data-ru="Полный каталог">Толық каталог</small><span class="go" data-kz="Ашу →" data-ru="Открыть →">Ашу →</span></a>
+  <a class="cat" href="https://altynorda-zhenskiy.moysklad.shop" target="_blank" rel="noopener"><span class="ic">👩</span><b data-kz="Әйелдер бөлімі" data-ru="Женский отдел">Әйелдер бөлімі</b><small data-kz="Киім, аксессуар, сөмкелер" data-ru="Одежда, аксессуары, сумки">Киім, аксессуар, сөмкелер</small><span class="go" data-kz="Ашу →" data-ru="Открыть →">Ашу →</span></a>
+  <a class="cat" href="https://altynorda-muzhskoy.moysklad.shop" target="_blank" rel="noopener"><span class="ic">👨</span><b data-kz="Ерлер бөлімі" data-ru="Мужской отдел">Ерлер бөлімі</b><small data-kz="Киім, аяқ киім, аксессуар" data-ru="Одежда, обувь, аксессуары">Киім, аяқ киім, аксессуар</small><span class="go" data-kz="Ашу →" data-ru="Открыть →">Ашу →</span></a>
+  <a class="cat" href="https://altynorda-detskiy.moysklad.shop" target="_blank" rel="noopener"><span class="ic">🧒</span><b data-kz="Балалар (5–12 жас)" data-ru="Детский (5–12 лет)">Балалар (5–12 жас)</b><small data-kz="Ұлдар, қыздар, мектеп сөмкелері" data-ru="Мальчики, девочки, рюкзаки">Ұлдар, қыздар, мектеп сөмкелері</small><span class="go" data-kz="Ашу →" data-ru="Открыть →">Ашу →</span></a>
+  <a class="cat" href="https://altynorda-podrostkovyy.moysklad.shop" target="_blank" rel="noopener"><span class="ic">🧑</span><b data-kz="Жасөспірімдер (13–17)" data-ru="Подростковый (13–17)">Жасөспірімдер (13–17)</b><small data-kz="Киім, аяқ киім, мектеп формасы" data-ru="Одежда, обувь, школьная форма">Киім, аяқ киім, мектеп формасы</small><span class="go" data-kz="Ашу →" data-ru="Открыть →">Ашу →</span></a>
+  <a class="cat" href="https://altynorda-novorozhdennye.moysklad.shop" target="_blank" rel="noopener"><span class="ic">👶</span><b data-kz="Нәрестелер (0–4 жас)" data-ru="Малыши (0–4 года)">Нәрестелер (0–4 жас)</b><small data-kz="Боди, комбинезон, конверт" data-ru="Боди, комбинезоны, конверты">Боди, комбинезон, конверт</small><span class="go" data-kz="Ашу →" data-ru="Открыть →">Ашу →</span></a>
+  <a class="cat" href="https://altynorda-tekstil.moysklad.shop" target="_blank" rel="noopener"><span class="ic">🏠</span><b data-kz="Үй текстилі" data-ru="Текстиль">Үй текстилі</b><small data-kz="Төсек жабдығы, сүлгі" data-ru="Постельное, полотенца">Төсек жабдығы, сүлгі</small><span class="go" data-kz="Ашу →" data-ru="Открыть →">Ашу →</span></a>
+  <a class="cat" href="https://altynorda-chemodany.moysklad.shop" target="_blank" rel="noopener"><span class="ic">🧳</span><b data-kz="Чемодандар" data-ru="Чемоданы">Чемодандар</b><small data-kz="Жол сөмкелері" data-ru="Дорожные сумки">Жол сөмкелері</small><span class="go" data-kz="Ашу →" data-ru="Открыть →">Ашу →</span></a>
+ </div>
+</div></section>
+
+<section id="about" class="alt"><div class="wrap">
+ <div class="sec-h"><div class="k" data-kz="Біз туралы" data-ru="О нас">Біз туралы</div>
+  <h2 data-kz="Отбасыңызға керектің бәрі — бір жерде" data-ru="Всё для вашей семьи — в одном месте">Отбасыңызға керектің бәрі — бір жерде</h2>
+  <p data-kz="ALTYN ORDA — Құрманғазыдағы отбасылық киім дүкені. Біздің мақсатымыз — Қазақстандағы танымал киім дүкендері желісіне айналу." data-ru="ALTYN ORDA — семейный магазин одежды в Курмангазы. Наша цель — стать известной сетью магазинов одежды в Казахстане.">ALTYN ORDA — Құрманғазыдағы отбасылық киім дүкені. Біздің мақсатымыз — Қазақстандағы танымал киім дүкендері желісіне айналу.</p></div>
+ <div class="grid feat">
+  <div class="f"><div class="ic">👨‍👩‍👧‍👦</div><b data-kz="Бүкіл отбасыға" data-ru="Для всей семьи">Бүкіл отбасыға</b><p data-kz="Нәрестелер, балалар, жасөспірімдер, ерлер мен әйелдер киімі." data-ru="Одежда для малышей, детей, подростков, мужчин и женщин.">Нәрестелер, балалар, жасөспірімдер, ерлер мен әйелдер киімі.</p></div>
+  <div class="f"><div class="ic">💳</div><b data-kz="Ыңғайлы төлем" data-ru="Удобная оплата">Ыңғайлы төлем</b><p data-kz="Kaspi, Halyk немесе қолма-қол." data-ru="Kaspi, Halyk или наличными.">Kaspi, Halyk немесе қолма-қол.</p></div>
+  <div class="f"><div class="ic">🚗</div><b data-kz="Жеткізу" data-ru="Доставка">Жеткізу</b><p data-kz="Тапсырысты inDrive арқылы жеткіземіз немесе дүкеннен алып кетесіз." data-ru="Доставим заказ через inDrive или заберите в магазине.">Тапсырысты inDrive арқылы жеткіземіз немесе дүкеннен алып кетесіз.</p></div>
+  <div class="f"><div class="ic">🔁</div><b data-kz="Өлшемін ауыстыру" data-ru="Обмен размера">Өлшемін ауыстыру</b><p data-kz="5 күн ішінде басқа өлшемге ауыстыруға болады." data-ru="В течение 5 дней можно обменять на другой размер.">5 күн ішінде басқа өлшемге ауыстыруға болады.</p></div>
+ </div>
+</div></section>
+
+<section id="order"><div class="wrap">
+ <div class="sec-h"><div class="k" data-kz="Тапсырыс" data-ru="Заказ">Тапсырыс</div>
+  <h2 data-kz="Қалай тапсырыс беруге болады" data-ru="Как сделать заказ">Қалай тапсырыс беруге болады</h2></div>
+ <div class="grid steps">
+  <div class="step"><b data-kz="Тауарды таңдаңыз" data-ru="Выберите товар">Тауарды таңдаңыз</b><p data-kz="Онлайн каталогтан ұнаған тауар мен өлшемін таңдаңыз." data-ru="Выберите товар и размер в онлайн-каталоге.">Онлайн каталогтан ұнаған тауар мен өлшемін таңдаңыз.</p></div>
+  <div class="step"><b data-kz="Тапсырыс беріңіз" data-ru="Оформите заказ">Тапсырыс беріңіз</b><p data-kz="Каталогта тапсырыс рәсімдеңіз немесе WhatsApp-қа жазыңыз." data-ru="Оформите заказ в каталоге или напишите в WhatsApp.">Каталогта тапсырыс рәсімдеңіз немесе WhatsApp-қа жазыңыз.</p></div>
+  <div class="step"><b data-kz="Қабылдап алыңыз" data-ru="Получите заказ">Қабылдап алыңыз</b><p data-kz="Дүкеннен алып кетіңіз немесе inDrive арқылы жеткіземіз." data-ru="Заберите в магазине или получите доставкой через inDrive.">Дүкеннен алып кетіңіз немесе inDrive арқылы жеткіземіз.</p></div>
+ </div>
+ <div class="rules"><b data-kz="Айырбастау ережесі" data-ru="Правила обмена">Айырбастау ережесі</b>
+  <ul>
+   <li data-kz="Сатып алғаннан кейін 5 күн ішінде тек басқа өлшемге ауыстырылады." data-ru="В течение 5 дней после покупки — только обмен на другой размер.">Сатып алғаннан кейін 5 күн ішінде тек басқа өлшемге ауыстырылады.</li>
+   <li data-kz="Ақша қайтарылмайды." data-ru="Деньги не возвращаются.">Ақша қайтарылмайды.</li>
+   <li data-kz="Гигиеналық тауарлар мен жеңілдіктегі тауарлар ауыстырылмайды." data-ru="Товары личной гигиены и товары со скидкой обмену не подлежат.">Гигиеналық тауарлар мен жеңілдіктегі тауарлар ауыстырылмайды.</li>
+  </ul>
+ </div>
+</div></section>
+
+<section id="contacts" class="alt"><div class="wrap">
+ <div class="sec-h"><div class="k" data-kz="Байланыс" data-ru="Контакты">Байланыс</div>
+  <h2 data-kz="Дүкенге келіңіз" data-ru="Приходите в магазин">Дүкенге келіңіз</h2></div>
+ <div class="contact">
+  <div class="card">
+   <div class="row"><span class="ic">📍</span><div><small data-kz="Мекенжай" data-ru="Адрес">Мекенжай</small><b data-kz="Атырау облысы, Құрманғазы ауданы, Құрманғазы ауылы, Шақу Сәтеков көшесі, 14" data-ru="Атырауская обл., Курмангазинский р-н, с. Курмангазы, ул. Шаку Сатекова, 14">Атырау облысы, Құрманғазы ауданы, Құрманғазы ауылы, Шақу Сәтеков көшесі, 14</b></div></div>
+   <div class="row"><span class="ic">📞</span><div><small data-kz="Телефон / WhatsApp" data-ru="Телефон / WhatsApp">Телефон / WhatsApp</small><b><a href="tel:+77770198800">+7 777 019 88 00</a></b></div></div>
+   <div class="btns" style="margin-top:16px">
+    <a class="btn dark" href="https://2gis.kz/search/%D0%9A%D1%83%D1%80%D0%BC%D0%B0%D0%BD%D0%B3%D0%B0%D0%B7%D1%8B%20%D0%A8%D0%B0%D0%BA%D1%83%20%D0%A1%D0%B0%D1%82%D0%B5%D0%BA%D0%BE%D0%B2%D0%B0%2014" target="_blank" rel="noopener" data-kz="2GIS-те ашу" data-ru="Открыть в 2GIS">2GIS-те ашу</a>
+    <a class="btn dark" href="https://www.google.com/maps/search/?api=1&query=%D0%9A%D1%83%D1%80%D0%BC%D0%B0%D0%BD%D0%B3%D0%B0%D0%B7%D1%8B%2C%20%D1%83%D0%BB.%20%D0%A8%D0%B0%D0%BA%D1%83%20%D0%A1%D0%B0%D1%82%D0%B5%D0%BA%D0%BE%D0%B2%D0%B0%2C%2014" target="_blank" rel="noopener" data-kz="Google Maps" data-ru="Google Maps">Google Maps</a>
+   </div>
+   <div class="socials">
+    <a class="soc" href="https://wa.me/77770198800" target="_blank" rel="noopener">💬 WhatsApp</a>
+    <a class="soc" href="https://instagram.com/altynorda_kurmangazy" target="_blank" rel="noopener">📸 Instagram</a>
+    <a class="soc" href="https://www.tiktok.com/@altynorda_kurmangazy" target="_blank" rel="noopener">🎵 TikTok</a>
+   </div>
+  </div>
+  <div class="card">
+   <b style="font-size:18px" data-kz="Жұмыс уақыты" data-ru="Время работы">Жұмыс уақыты</b>
+   <table class="hours" style="margin-top:8px">
+    <tr><td data-kz="Дүйсенбі – Сенбі" data-ru="Понедельник – Суббота">Дүйсенбі – Сенбі</td><td>09:00 – 18:30</td></tr>
+    <tr><td data-kz="Жексенбі" data-ru="Воскресенье">Жексенбі</td><td>09:00 – 13:00</td></tr>
+   </table>
+   <p style="color:var(--mut);font-size:15px;margin:16px 0 0" data-kz="Сұрағыңыз болса, WhatsApp-қа жазыңыз — жұмыс уақытында тез жауап береміз." data-ru="Есть вопросы — пишите в WhatsApp, в рабочее время ответим быстро.">Сұрағыңыз болса, WhatsApp-қа жазыңыз — жұмыс уақытында тез жауап береміз.</p>
+  </div>
+ </div>
+</div></section>
+
+<section id="jobs" class="jobs"><div class="wrap">
+ <div class="sec-h"><div class="k" data-kz="Вакансиялар" data-ru="Вакансии">Вакансиялар</div>
+  <h2 data-kz="Командамызға қосылыңыз" data-ru="Присоединяйтесь к нашей команде">Командамызға қосылыңыз</h2>
+  <p data-kz="Бізге сатуды жақсы көретін, клиентпен тіл табыса алатын және өсуге ұмтылатын адамдар керек. Тәжірибеңіз аз болса да, үйренуге дайын болсаңыз — өтініш беріңіз." data-ru="Нам нужны люди, которые любят продавать, находят общий язык с клиентами и стремятся расти. Даже если опыта мало, но вы готовы учиться — подавайте заявку.">Бізге сатуды жақсы көретін, клиентпен тіл табыса алатын және өсуге ұмтылатын адамдар керек. Тәжірибеңіз аз болса да, үйренуге дайын болсаңыз — өтініш беріңіз.</p></div>
+ <div class="jgrid">
+  <div class="perks">
+   <div class="perk"><span class="ic">💰</span><div><b data-kz="Нәтижеге байланысты табыс" data-ru="Доход от результата">Нәтижеге байланысты табыс</b><span data-kz="Тұрақты жалақы және сатудан бонус." data-ru="Стабильная зарплата и бонус с продаж.">Тұрақты жалақы және сатудан бонус.</span></div></div>
+   <div class="perk"><span class="ic">📈</span><div><b data-kz="Мансаптық өсу" data-ru="Карьерный рост">Мансаптық өсу</b><span data-kz="Аға сатушы, бөлім жетекшісі, дүкен әкімшісі." data-ru="Старший продавец, руководитель отдела, администратор.">Аға сатушы, бөлім жетекшісі, дүкен әкімшісі.</span></div></div>
+   <div class="perk"><span class="ic">🎓</span><div><b data-kz="Оқыту" data-ru="Обучение">Оқыту</b><span data-kz="Сату техникасы, клиентпен жұмыс, тауар білімі." data-ru="Техники продаж, работа с клиентом, знание товара.">Сату техникасы, клиентпен жұмыс, тауар білімі.</span></div></div>
+   <div class="perk"><span class="ic">🗓</span><div><b data-kz="Тұрақты кесте" data-ru="Стабильный график">Тұрақты кесте</b><span data-kz="Дүйсенбі – Сенбі 09:00–18:30, Жексенбі 09:00–13:00." data-ru="Понедельник – Суббота 09:00–18:30, Воскресенье 09:00–13:00.">Дүйсенбі – Сенбі 09:00–18:30, Жексенбі 09:00–13:00.</span></div></div>
+  </div>
+  <div class="apply">
+   <h3 data-kz="Өтініш беру" data-ru="Подать заявку">Өтініш беру</h3>
+   <p data-kz="Іріктеу қалай өтеді:" data-ru="Как проходит отбор:">Іріктеу қалай өтеді:</p>
+   <ol>
+    <li data-kz="Онлайн анкета және тест (10 минут)" data-ru="Онлайн-анкета и тест (10 минут)">Онлайн анкета және тест (10 минут)</li>
+    <li data-kz="Әңгімелесу" data-ru="Собеседование">Әңгімелесу</li>
+    <li data-kz="Тәжірибелік кезең" data-ru="Испытательный период">Тәжірибелік кезең</li>
+    <li data-kz="Нәтижесіне қарай жұмысқа қабылдау" data-ru="Приём на работу по результатам">Нәтижесіне қарай жұмысқа қабылдау</li>
+   </ol>
+   <a class="btn gold" href="https://claude.ai/artifact/BJL6GX8jHh6kZMtwDuUDcd" target="_blank" rel="noopener" data-kz="Анкета толтыру →" data-ru="Заполнить анкету →">Анкета толтыру →</a>
+  </div>
+ </div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+ <div><b>ALTYN ORDA</b> · <span data-kz="Отбасылық киім дүкені" data-ru="Семейный магазин одежды">Отбасылық киім дүкені</span></div>
+ <div>ЖК Утепов Б.Е. · Құрманғазы · © <span id="yr">2026</span></div>
+</div></footer>
+
+<a class="wa-float" href="https://wa.me/77770198800" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.82 14.13c-.25.69-1.44 1.32-1.98 1.36-.51.05-1 .24-3.36-.7-2.84-1.12-4.65-4.03-4.79-4.22-.14-.18-1.14-1.52-1.14-2.9s.72-2.06.98-2.34c.25-.28.55-.35.74-.35l.53.01c.17.01.4-.06.62.48.25.6.85 2.07.92 2.22.07.15.12.32.02.51-.09.19-.14.31-.28.47-.14.17-.3.37-.42.5-.14.14-.29.29-.12.57.16.28.73 1.2 1.57 1.95 1.08.96 1.99 1.26 2.27 1.4.28.14.45.12.61-.07.17-.19.71-.83.9-1.11.18-.28.37-.23.62-.14.25.09 1.6.76 1.87.9.28.14.46.21.53.32.07.12.07.67-.18 1.36z"/></svg></a>
+
+<script>
+(function(){
+ var lang='kz';try{lang=localStorage.getItem('ao-lang')||'kz'}catch(e){}
+ function apply(l){lang=l;document.documentElement.lang=l==='kz'?'kk':'ru';
+  document.querySelectorAll('[data-kz]').forEach(function(el){el.innerHTML=el.getAttribute('data-'+l)});
+  document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});
+  document.title=l==='kz'?'ALTYN ORDA — отбасылық киім дүкені, Құрманғазы':'ALTYN ORDA — семейный магазин одежды, Курмангазы';
+  try{localStorage.setItem('ao-lang',l)}catch(e){}}
+ document.querySelectorAll('.lang button').forEach(function(b){b.onclick=function(){apply(b.getAttribute('data-l'))}});
+ document.querySelectorAll('#nav a').forEach(function(a){a.onclick=function(){document.getElementById('nav').classList.remove('open')}});
+ document.getElementById('yr').textContent=new Date().getFullYear();
+ if(lang!=='kz')apply(lang);
+})();
+</script>
+</body>
+</html>
