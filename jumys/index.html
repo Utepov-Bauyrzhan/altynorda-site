@@ -140,6 +140,25 @@ input.bad,textarea.bad,select.bad{border-color:var(--red);background:#fdf1f0;box
 .rgrid .rcard:last-child:nth-child(odd){grid-column:1/-1}
 .jnote{color:var(--mut);font-size:14px;text-align:center;margin:22px 0 0}
 @media(max-width:640px){.jhero{padding:26px 20px}.jhero h1{font-size:26px}.jsteps{grid-template-columns:1fr 1fr}.rgrid{grid-template-columns:1fr}.rgrid .rcard:last-child:nth-child(odd){grid-column:auto}.tb-brand b{font-size:17px}}
+/* a11y / easier */
+.tb-brand small{font-size:12px}
+.lang button{min-height:44px;min-width:44px;padding:8px 12px;font-size:14px}
+footer{font-size:15px}footer a{display:inline-block;padding:12px 8px}
+.chip{min-height:44px;cursor:pointer}
+.chip input{width:22px;height:22px;flex:none;accent-color:#c9a24a;cursor:pointer}
+.chip.ack,.chip.cons{display:flex;width:100%;padding:14px}
+.more{margin-top:26px;border:1px solid var(--line);border-radius:14px;background:#fcfbf8}
+.more>summary{list-style:none;cursor:pointer;padding:16px;font-weight:700;font-size:16px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.more>summary::-webkit-details-marker{display:none}
+.more>summary small{display:block;font-weight:400;color:var(--mut);font-size:13px;margin-top:2px}
+.more>summary:after{content:"＋";font-size:22px;color:#7a5a17}
+.more[open]>summary:after{content:"－"}
+.more>.in{padding:0 16px 16px}
+.hint{background:#eef7f0;border:1px solid #cfe8d6;color:#1d5c35;border-radius:12px;padding:10px 14px;font-size:14px;margin-bottom:14px;display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.hint button{border:0;background:none;color:#1d5c35;text-decoration:underline;font:inherit;font-size:14px;cursor:pointer;padding:6px 0}
+.half{background:#fff7e0;border:1px solid #f0dca3;color:#7a5a17;border-radius:12px;padding:10px 14px;font-size:15px;font-weight:600;margin:10px 0 0}
+.req{color:var(--red)}
+@media(max-width:380px){.tb-brand{gap:8px}.tb-brand img{width:40px;height:40px}.tb-brand b{font-size:16px}.tb-brand small{font-size:12px;letter-spacing:.06em}.lang button{padding:8px;min-width:40px}}
 </style>
 </head>
 <body>
@@ -453,7 +472,21 @@ function header(){return`<div class="topbar"><a class="tb-brand" href="/"><img s
  <div class="tb-right"><div class="lang"><button class="${lang==="kz"?"on":""}" onclick="setLang('kz')">Қаз</button><button class="${lang==="ru"?"on":""}" onclick="setLang('ru')">Рус</button></div></div></div>`}
 function setLang(l){if(step==="cv")grabCv();lang=l;render()}
 
-function render(){app.className="wrap";
+const SAVE_KEY="ao_jumys_v1";
+function saveLocal(){try{if(step==="cv"&&document.getElementById("nm"))grabCv();
+ if(step==="intro"||step==="done"){localStorage.removeItem(SAVE_KEY);return}
+ localStorage.setItem(SAVE_KEY,JSON.stringify({t:Date.now(),lang,step,role,cv,ans,qi,startedAt}))}catch(e){}}
+let restored=false,rsAt="";
+function loadLocal(){try{const d=JSON.parse(localStorage.getItem(SAVE_KEY)||"null");
+ if(!d||!d.role||!ROLES[d.role]||Date.now()-d.t>7*864e5)return;
+ lang=d.lang||lang;role=d.role;cv=d.cv||{};ans=d.ans||{};startedAt=d.startedAt||Date.now();step=d.step;
+ if(step==="q"||step==="review"){QS=questionsFor(role);qi=Math.min(d.qi||0,QS.length-1)}
+ restored=true;rsAt=step+":"+qi}catch(e){}}
+function resumeHint(){return restored&&rsAt===step+":"+qi?`<div class="hint"><span>💾 ${L("Сіз тоқтаған жерден жалғастырып жатырсыз.","Вы продолжаете с того места, где остановились.")}</span><button onclick="restart()">${L("Басынан бастау","Начать заново")}</button></div>`:""}
+function restart(){try{localStorage.removeItem(SAVE_KEY)}catch(e){}restored=false;step="intro";role="";cv={};ans={};qi=0;QS=[];render();window.scrollTo(0,0)}
+let _svT;document.addEventListener("input",()=>{if(step!=="cv")return;clearTimeout(_svT);_svT=setTimeout(saveLocal,400)});
+document.addEventListener("change",()=>{if(step==="cv")saveLocal()});
+function render(){app.className="wrap";saveLocal();
  if(step==="intro")return renderIntro();
  if(step==="vac")return renderVac();
  if(step==="cv")return renderCv();
@@ -552,7 +585,7 @@ admin:{kz:{t:"📢 ВАКАНСИЯ: ДҮКЕН ӘКІМШІСІ (АДМИНИС
 };
 function renderVac(){const v=VAC[role][lang==="kz"?"kz":"ru"],S=lang==="kz"?SCHED_KZ:SCHED_RU;
  const li=a=>a.map(x=>x==="SCHED"?`<li>${L("Жұмыс кестесі:","График работы:")}<ul>${S.map(z=>`<li>${esc(z)}</li>`).join("")}</ul></li>`:`<li>${esc(x)}</li>`).join("");
- app.innerHTML=header()+`<div class="card vac"><div class="vt">${esc(v.t)}</div><h1>${esc(v.h)}</h1><p>${esc(v.i)}</p>
+ app.innerHTML=header()+resumeHint()+`<div class="card vac"><div class="vt">${esc(v.t)}</div><h1>${esc(v.h)}</h1><p>${esc(v.i)}</p>
  <h3>📌 ${L("Негізгі міндеттері","Основные обязанности")}</h3>${v.dg?v.dg.map(g=>`<h4>${esc(g[0])}</h4><ul>${li(g[1])}</ul>`).join(""):`<ul>${li(v.d)}</ul>`}
  <h3>✅ ${L("Үміткерге қойылатын талаптар","Требования к кандидату")}</h3><ul>${li(v.r)}</ul>
  ${v.n?`<p class="vnote">${esc(v.n)}</p>`:""}
@@ -560,7 +593,7 @@ function renderVac(){const v=VAC[role][lang==="kz"?"kz":"ru"],S=lang==="kz"?SCHE
  ${v.o?`<h3>🚀 ${L("Біз не ұсынамыз?","Что мы предлагаем?")}</h3><ul>${li(v.o)}</ul>`:""}
  ${v.ad?`<h3>📍 ${L("Мекенжай","Адрес")}</h3><p style="margin:0">${esc(v.ad)}</p>`:""}
  <p class="vend">${esc(v.e)}</p>
- <label class="chip ack"><input type="checkbox" id="ack" onchange="document.getElementById('go').disabled=!this.checked"> ${L("Вакансиямен таныстым","Я ознакомился(ась) с вакансией")}</label>
+ <label class="chip ack"><input type="checkbox" id="ack" onchange="document.getElementById('go').disabled=!this.checked"> <span>${L("Вакансиямен таныстым","Я ознакомился(ась) с вакансией")}</span></label>
  <div class="row" style="margin-top:16px;justify-content:space-between"><button class="btn ghost" onclick="step='intro';render()">← ${L("Артқа","Назад")}</button>
  <button class="btn gold" id="go" disabled onclick="step='cv';render();window.scrollTo(0,0)">${L("Анкета толтыру","Заполнить анкету")} →</button></div></div>`}
 
@@ -572,31 +605,32 @@ const SCHED=[["yes",["Иә","Да"]],["no",["Жоқ","Нет"]],["part",["Кел
 const SRC=[["insta","Instagram"],["wa","WhatsApp"],["hh","hh.kz"],["olx","OLX"],["friend",["Таныстар","Знакомые"]],["other",["Басқа","Другое"]]];
 const lbl=x=>Array.isArray(x)?L(x[0],x[1]):x;
 const sel_=(id,opts,v)=>`<select id="${id}"><option value="">—</option>${opts.map(o=>`<option value="${o[0]}" ${v===o[0]?"selected":""}>${lbl(o[1])}</option>`).join("")}</select>`;
-function renderCv(){const c=cv,jobs=[(c.jobs&&c.jobs[0])||{}];
- app.innerHTML=header()+`<div class="card"><span class="part">${L("1-қадам · Резюме","Шаг 1 · Резюме")} · ${L(ROLES[role].kz,ROLES[role].ru)}</span>
+function renderCv(){const c=cv,j=(c.jobs&&c.jobs[0])||{};
+ app.innerHTML=header()+resumeHint()+`<div class="card"><span class="part">${L("1-қадам · Резюме","Шаг 1 · Резюме")} · ${L(ROLES[role].kz,ROLES[role].ru)}</span>
  <h2>${L("Өзіңіз туралы","О себе")}</h2>
- <label>${L("Аты-жөніңіз","Имя и фамилия")} *</label><input id="nm" value="${esc(c.name)}">
- <div class="g2"><div><label>${L("Телефон (WhatsApp)","Телефон (WhatsApp)")} *</label><input id="ph" inputmode="tel" value="${esc(c.phone)}"></div>
- <div><label>${L("Туған күні, айы, жылы","Дата рождения")} *</label><input id="bd" inputmode="numeric" maxlength="10" placeholder="${L("КК.АА.ЖЖЖЖ (мысалы 15.03.2001)","ДД.ММ.ГГГГ (например 15.03.2001)")}" value="${esc(c.birth)}"></div></div>
- <label>${L("Мекенжайыңыз","Ваш адрес")} *</label><input id="lv" placeholder="${L("Мысалы: Құрманғазы ауданы, Құрманғазы ауылы, Абай көшесі, 5","Например: Курмангазинский район, село Курмангазы, ул. Абая, 5")}" value="${esc(c.live)}">
+ <p class="mut" style="margin:0">${L("Жұлдызшасы (<span class=req>*</span>) бар өрістер міндетті. Қалғанын білгеніңізше толтырыңыз.","Поля со звёздочкой (<span class=req>*</span>) обязательны. Остальное — по возможности.")}</p>
+ <label>${L("Аты-жөніңіз","Имя и фамилия")} <span class=req>*</span></label><input id="nm" autocomplete="name" value="${esc(c.name)}">
+ <div class="g2"><div><label>${L("Телефон (WhatsApp)","Телефон (WhatsApp)")} <span class=req>*</span></label><input id="ph" inputmode="tel" autocomplete="tel" value="${esc(c.phone)}"></div>
+ <div><label>${L("Туған күні, айы, жылы","Дата рождения")} <span class=req>*</span></label><input id="bd" inputmode="numeric" maxlength="10" placeholder="${L("Мысалы 15.03.2001","Например 15.03.2001")}" value="${esc(c.birth)}"></div></div>
+ <label>${L("Мекенжайыңыз","Ваш адрес")} <span class=req>*</span></label><input id="lv" placeholder="${L("Мысалы: Құрманғазы ауылы, Абай көшесі, 5","Например: село Курмангазы, ул. Абая, 5")}" value="${esc(c.live)}">
  <div class="g2"><div><label>${L("Білімі","Образование")}</label>${sel_("ed",EDU,c.edu)}</div>
- <div><label>${L("Мамандығы / оқу орны","Специальность / учебное заведение")}</label><input id="eds" value="${esc(c.eduSpec)}"></div></div>
+ <div><label>${L("Соңғы жұмыс орныңыз","Последнее место работы")}</label><input id="j0p" placeholder="${L("Болмаса, бос қалдырыңыз","Если нет — оставьте пустым")}" value="${esc(j.place)}"></div></div>
+ <div class="g2"><div><label>${L("Жұмысқа қашан шыға аласыз?","Когда можете выйти на работу?")}</label><input id="st" placeholder="${L("Мысалы: бірден / 1 желтоқсан","Например: сразу / 1 декабря")}" value="${esc(c.startDate)}"></div>
+ <div><label>${L("Кесте: Дс–Сн 09:00–18:30, Жс 09:00–13:00. Ыңғайлы ма?","График: Пн–Сб 09:00–18:30, Вс 09:00–13:00. Подходит?")}</label>${sel_("sc",SCHED,c.sched)}</div></div>
+
+ <details class="more"${(c.eduSpec||c.lkz||c.lru||j.pos||j.time||j.why||(c.skills||[]).length||c.salary||c.src||c.why||c.ach)?" open":""}><summary><span>${L("Қосымша мәліметтер","Дополнительно")}<small>${L("Міндетті емес — толтырсаңыз, мүмкіндігіңіз артады","Необязательно — но повышает ваши шансы")}</small></span></summary><div class="in">
+ <div class="g2"><div><label>${L("Мамандығы / оқу орны","Специальность / учебное заведение")}</label><input id="eds" value="${esc(c.eduSpec)}"></div>
+ <div><label>${L("Соңғы жұмыстағы лауазымыңыз","Должность на последней работе")}</label><input id="j0r" value="${esc(j.pos)}"></div></div>
+ <div class="g2"><div><label>${L("Онда қанша уақыт істедіңіз","Сколько там работали")}</label><input id="j0t" placeholder="${L("Мысалы: 1 жыл 3 ай","Например: 1 год 3 мес.")}" value="${esc(j.time)}"></div><div><label>${L("Неге кеттіңіз","Причина ухода")}</label><input id="j0w" value="${esc(j.why)}"></div></div>
  <div class="g2"><div><label>${L("Қазақ тілі","Казахский язык")}</label>${sel_("lkz",LVL,c.lkz)}</div><div><label>${L("Орыс тілі","Русский язык")}</label>${sel_("lru",LVL,c.lru)}</div></div>
-
- <h2 style="margin-top:26px">${L("Жұмыс тәжірибесі","Опыт работы")}</h2>
- <p class="mut" style="margin:0">${L("Соңғы жұмыс орныңыз. Тәжірибе болмаса, бос қалдырыңыз.","Последнее место работы. Если опыта нет — оставьте пустым.")}</p>
- ${jobs.map((j,i)=>`<div class="job"><div class="g2"><div><label>${L("Жұмыс орны","Место работы")}</label><input id="j${i}p" value="${esc(j.place)}"></div><div><label>${L("Лауазымы","Должность")}</label><input id="j${i}r" value="${esc(j.pos)}"></div></div>
- <div class="g2"><div><label>${L("Қанша уақыт істедіңіз","Сколько работали")}</label><input id="j${i}t" placeholder="${L("Мысалы: 1 жыл 3 ай","Например: 1 год 3 мес.")}" value="${esc(j.time)}"></div><div><label>${L("Неге кеттіңіз","Причина ухода")}</label><input id="j${i}w" value="${esc(j.why)}"></div></div></div>`).join("")}
-
- <h2 style="margin-top:26px">${L("Дағдылар мен шарттар","Навыки и условия")}</h2>
- <label>${L("Нені білесіз?","Чем владеете?")}</label><div class="chips">${SKILLS.map(s=>`<label class="chip"><input type="checkbox" id="sk_${s[0]}" ${(c.skills||[]).includes(s[0])?"checked":""}> ${lbl(s[1])}</label>`).join("")}</div>
+ <label>${L("Нені білесіз? (бірнешеуін белгілеуге болады)","Чем владеете? (можно несколько)")}</label><div class="chips">${SKILLS.map(s=>`<label class="chip"><input type="checkbox" id="sk_${s[0]}" ${(c.skills||[]).includes(s[0])?"checked":""}> ${lbl(s[1])}</label>`).join("")}</div>
  <div class="g2"><div><label>${L("Күтетін жалақыңыз (₸/ай)","Ожидаемая зарплата (₸/мес)")}</label><input id="sl" inputmode="numeric" value="${esc(c.salary)}"></div>
- <div><label>${L("Жұмысқа қашаннан бастап шыға аласыз?","С какого числа можете выйти на работу?")}</label><input id="st" value="${esc(c.startDate)}"></div></div>
- <label>${L("Жұмыс кестесі: Дүйсенбіден Сенбіге дейін 09:00–18:30, Жексенбі күні 09:00–13:00. Осы кесте сізге ыңғайлы ма?","График работы: с понедельника по субботу 09:00–18:30, в воскресенье 09:00–13:00. Вам подходит этот график?")}</label>${sel_("sc",SCHED,c.sched)}
- <label>${L("Вакансия туралы қайдан білдіңіз?","Откуда узнали о вакансии?")}</label>${sel_("sr",SRC,c.src)}
- <label>${L("Неге ALTYN ORDA-да жұмыс істегіңіз келеді?","Почему вы хотите работать в ALTYN ORDA?")}</label><textarea id="why" rows="3">${esc(c.why)}</textarea>
+ <div><label>${L("Вакансия туралы қайдан білдіңіз?","Откуда узнали о вакансии?")}</label>${sel_("sr",SRC,c.src)}</div></div>
+ <label>${L("Неге бізде жұмыс істегіңіз келеді?","Почему хотите работать у нас?")}</label><textarea id="why" rows="3">${esc(c.why)}</textarea>
  <label>${L("Ең үлкен жетістігіңіз (жұмыста не өмірде)","Ваше главное достижение (в работе или в жизни)")}</label><textarea id="ach" rows="3">${esc(c.ach)}</textarea>
- <label class="chip" style="margin-top:18px;font-weight:400"><input type="checkbox" id="cs" ${c.consent?"checked":""}> ${L("Деректерімді ALTYN ORDA-ның жұмысқа іріктеуі үшін өңдеуге келісемін.","Согласен(на) на обработку моих данных ALTYN ORDA для отбора на работу.")} *</label>
+ </div></details>
+
+ <label class="chip cons" style="margin-top:20px;font-weight:400"><input type="checkbox" id="cs" ${c.consent?"checked":""}> <span>${L("Деректерімді ALTYN ORDA-ның жұмысқа іріктеуі үшін өңдеуге келісемін.","Согласен(на) на обработку моих данных ALTYN ORDA для отбора на работу.")} <span class=req>*</span></span></label>
  <div id="er" class="err"></div>
  <div class="row" style="margin-top:20px;justify-content:space-between"><button class="btn ghost" onclick="step='vac';render()">← ${L("Артқа","Назад")}</button><button class="btn gold" onclick="cvNext()">${L("Тестке өту","Перейти к тесту")} →</button></div></div>`}
 function parseBirth(d){const m=String(d||"").match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);if(!m)return null;const D=+m[1],M=+m[2],Y=+m[3];const t=new Date(Y,M-1,D);
@@ -619,19 +653,21 @@ function cvNext(){grabCv();const c=cv;
 document.addEventListener("input",e=>{if(e.target.classList&&e.target.classList.contains("bad")&&e.target.value.trim())e.target.classList.remove("bad")});
 document.addEventListener("change",e=>{if(e.target.id==="cs"&&e.target.checked)e.target.closest(".chip").classList.remove("bad")});
 /* ---------- questions ---------- */
-function renderQ(){const q=QS[qi],n=QS.length;let text,key,opts,part;
+function renderQ(){saveLocal();const q=QS[qi],n=QS.length;let text,key,opts,part;
  if(q.type==="st"){text=L(q.d[3],q.d[4]);key=q.d[0];opts=LIKS[q.d[5]||"a"].map(o=>({v:o.v,t:L(o.kz,o.ru)}));part=L("2-қадам · Өзіңіз туралы","Шаг 2 · О себе")}
  else if(q.type==="sit"){text=L(q.d.kz,q.d.ru);key=q.d.id;opts=q.d.o.map((o,i)=>({v:i,t:L(o[0],o[1])}));part=L("3-қадам · Жұмыстағы жағдаят","Шаг 3 · Рабочая ситуация")}
  else if(q.type==="pr"){text=L(q.d.kz,q.d.ru);key=q.id;opts=q.d.o.map((o,i)=>({v:i,t:L(o[0],o[1])}));part=L("3-қадам · Есеп","Шаг 3 · Задача")}
  else{key=q.d.id;part=L("3-қадам · Тапсырма","Шаг 3 · Задание");
-  app.innerHTML=header()+`<div class="card">${qhead(n,part)}<div class="qtext">${esc(L(q.d.kz,q.d.ru))}</div>
+  app.innerHTML=header()+resumeHint()+`<div class="card">${qhead(n,part)}<div class="qtext">${esc(L(q.d.kz,q.d.ru))}</div>
   <textarea id="ot" rows="5">${esc(ans[key]||"")}</textarea>
   <div class="row" style="margin-top:18px;justify-content:space-between"><button class="btn ghost" onclick="back()">← ${L("Артқа","Назад")}</button><button class="btn gold" onclick="openDone('${key}')">${L("Аяқтау","Завершить")}</button></div></div>`;return}
  const cur=ans[key];
- app.innerHTML=header()+`<div class="card">${qhead(n,part)}<div class="qtext">${esc(text)}</div><div class="opts">${opts.map(o=>`<button class="opt ${cur===o.v?"sel":""}" onclick="pick('${key}',${o.v})">${esc(o.t)}</button>`).join("")}</div>
+ app.innerHTML=header()+resumeHint()+`<div class="card">${qhead(n,part)}<div class="qtext">${esc(text)}</div><div class="opts">${opts.map(o=>`<button class="opt ${cur===o.v?"sel":""}" onclick="pick('${key}',${o.v})">${esc(o.t)}</button>`).join("")}</div>
  <div class="row" style="margin-top:18px;justify-content:space-between"><button class="btn ghost" onclick="back()">← ${L("Артқа","Назад")}</button>
  ${cur!=null&&qi<n-1?`<button class="btn ghost" onclick="next()">${L("Келесі","Далее")} →</button>`:""}</div></div>`}
-function qhead(n,part){return`<div class="qmeta"><span>${qi+1} / ${n}</span><span>${Math.round(qi/n*100)}%</span></div><div class="prog"><i style="width:${qi/n*100}%"></i></div><span class="part">${part}</span>`}
+function qhead(n,part){const left=Math.max(1,Math.ceil((n-qi)*12/60)),h=Math.floor(n/2);
+ return`<div class="qmeta"><span><b>${qi+1} / ${n}</b></span><span>≈ ${left} ${L("мин қалды","мин осталось")}</span></div><div class="prog"><i style="width:${qi/n*100}%"></i></div>${qi>=h&&qi<h+2?`<div class="half">👍 ${L("Жартысы өтті! Тағы аз қалды.","Половина пройдена! Осталось немного.")}</div>`:""}<span class="part" style="margin-top:10px">${part}</span>
+ <p class="mut" style="font-size:13px;margin:4px 0 0">${L("Дұрыс не бұрыс жауап жоқ — өзіңізге қалай жақын болса, солай таңдаңыз.","Правильных и неправильных ответов нет — выбирайте, как ближе вам.")}</p>`}
 function pick(k,v){ans[k]=v;if(qi<QS.length-1){qi++;renderQ()}else{step="review";render();window.scrollTo(0,0)}}
 function openDone(k){const v=document.getElementById("ot").value.trim();if(v.length<10){alertBox(L("Бірнеше сөйлем жазыңыз.","Напишите несколько предложений."));return}ans[k]=v;finish()}
 function alertBox(m){let e=document.getElementById("oer");if(!e){e=document.createElement("div");e.id="oer";e.className="err";document.getElementById("ot").after(e)}e.textContent=m}
@@ -787,6 +823,7 @@ function report(r){const s=r.scores;const role=ROLES[r.role]?r.role:"seller";con
  ${weak.length?`<div class="card" style="margin-bottom:16px"><h2>Сұхбатта қоятын сұрақтар</h2><ul class="iq">${weak.map(k=>`<li><b>${TRAITS[k].kz} (${s[k]}):</b> ${IQ[k]}</li>`).join("")}</ul></div>`:""}
  <p class="note">Бұл тест — сұхбатқа бағыт беретін құрал, шешім емес. Соңғы шешімді сұхбат және стажировкадағы нақты нәтиже бойынша қабылдаңыз.</p>
  ${r.id&&db?`<div style="margin-top:16px"><button id="delb" class="btn ghost" onclick="delRes()">Нәтижені өшіру</button></div>`:""}`}
+if(location.hash!=="#natizheler")loadLocal();
 route();
 </script>
 </body>
