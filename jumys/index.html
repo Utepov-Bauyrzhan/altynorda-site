@@ -147,6 +147,7 @@ input.bad,textarea.bad,select.bad{border-color:var(--red);background:#fdf1f0;box
 <script>
 /* ===================== CONFIG ===================== */
 const WA_NUMBER = "77770198800";
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbwBZVaJegArgLwB0BsanfLEI9Zzq0Mr272rcgsnwmzPAKZKV841vNuT4ak61SRL71SsWg/exec"; // «Жұмысқа үміткерлер» Google кестесі
 
 /* ===================== TRAITS ===================== */
 const TRAITS = {
@@ -641,26 +642,31 @@ function buildRec(){const r=score(ans,role);return{role,...cv,cvLang:lang,starte
 function waMsg(rec){return`ALTYN ORDA · ${L(ROLES[rec.role].kz,ROLES[rec.role].ru)}\n${rec.name} · ${rec.phone}\n${L("Төмендегі кодты өзгертпеңіз","Не меняйте код ниже")}:\n${code(rec)}`}
 function renderReview(){const n=QS.length;let btn;
  if(db){btn=`<button class="btn gold big" onclick="finish()">✅ ${L("Жіберу","Отправить")}</button>`}
- else{const rec=buildRec();window._last=rec;const href="https://wa.me/"+WA_NUMBER+"?text="+encodeURIComponent(waMsg(rec));
-  btn=`<a class="btn wa big" href="${href}" target="_blank" rel="noopener" onclick="setTimeout(()=>{step='done';saveState='sent';render();window.scrollTo(0,0)},400)">📲 ${L("Жіберу (WhatsApp арқылы)","Отправить (через WhatsApp)")}</a>
-  <p class="mut" style="font-size:14px;margin:14px 0 0">${L("Батырманы басқанда WhatsApp ашылады, хабарлама дайын тұрады — тек «Жіберу» (➤) батырмасын басыңыз.","После нажатия откроется WhatsApp с готовым сообщением — просто нажмите «Отправить» (➤).")}</p>`}
+ else{btn=`<button class="btn gold big" id="sendb" onclick="sendSheet()">✅ ${L("Жіберу","Отправить")}</button><div id="senderr"></div>`}
  app.innerHTML=header()+`<div class="card"><div class="prog"><i style="width:100%"></i></div>
  <h1>${L("Барлық сұраққа жауап бердіңіз! 🎉","Вы ответили на все вопросы! 🎉")}</h1>
  <p class="mut">${L("Анкетаңыз бен жауаптарыңыз дайын. Бізге жіберу үшін төмендегі батырманы басыңыз.","Ваша анкета и ответы готовы. Чтобы отправить их нам, нажмите кнопку ниже.")}</p>
  <div style="margin-top:18px">${btn}</div>
  <div style="margin-top:22px"><button class="btn ghost" onclick="step='q';qi=QS.length-1;render()">← ${L("Жауаптарды тексеру","Проверить ответы")}</button></div></div>`}
+async function sendSheet(){const b=document.getElementById("sendb");if(b){b.disabled=true;b.textContent=L("Жіберіліп жатыр…","Отправляем…")}
+ const rec=buildRec();window._last=rec;const body={...payload(rec),roleName:ROLES[rec.role].kz,fit:rec.fit,lang};
+ try{await fetch(SHEET_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(body)});step="done";saveState="sheet";render();window.scrollTo(0,0)}
+ catch(e){if(b){b.disabled=false;b.textContent="✅ "+L("Қайта жіберу","Отправить ещё раз")}
+  const href="https://wa.me/"+WA_NUMBER+"?text="+encodeURIComponent(waMsg(rec));
+  document.getElementById("senderr").innerHTML=`<p class="err" style="margin-top:12px">${L("Интернет байланысы үзілді. Қайта басып көріңіз немесе анкетаны WhatsApp арқылы жіберіңіз:","Нет связи. Попробуйте ещё раз или отправьте анкету через WhatsApp:")}</p><a class="btn wa big" href="${href}" target="_blank" rel="noopener">📲 ${L("WhatsApp арқылы жіберу","Отправить через WhatsApp")}</a>`}}
 async function finish(){const r=score(ans,role);const rec={role,...cv,cvLang:lang,startedAt,finishedAt:Date.now(),durationSec:Math.round((Date.now()-startedAt)/1000),answers:ans,...r,v:2};
  window._last=rec;step="done";saveState="saving";render();
  if(db){try{await db.collection("results").add(rec);saveState="ok"}catch(e){saveState="fail"}}else saveState="fail";
  render()}
 
 /* compact code for WhatsApp */
-function code(rec){const q=questionsFor(rec.role).filter(x=>x.type!=="open");
+function payload(rec){const q=questionsFor(rec.role).filter(x=>x.type!=="open");
  const a=q.map(x=>{const k=x.type==="st"?x.d[0]:x.type==="sit"?x.d.id:x.id;const v=rec.answers[k];return v==null?"x":String(x.type==="st"?v+2:v)}).join("");
  const c={...rec};["answers","scores","lie","contra","traitFit","prOk","prTotal","fit","startedAt","finishedAt","v","consent"].forEach(k=>delete c[k]);
  c.jobs=(c.jobs||[]).filter(j=>j.place||j.pos||j.time||j.why);
  const o=OPEN[rec.role]?rec.answers[OPEN[rec.role].id]:undefined;
- return"AO2:"+JSON.stringify({c,a,o})}
+ return{c,a,o}}
+function code(rec){return"AO2:"+JSON.stringify(payload(rec))}
 function decode(txt){let m=txt.match(/AO2:(\{[\s\S]*\})/);
  if(m){const j=JSON.parse(m[1]);const role=ROLES[j.c.role]?j.c.role:"seller";let q=questionsFor(role).filter(x=>x.type!=="open");
   if(j.a.length!==q.length){q.length=0;q.push(...questionsFor(role,true).filter(x=>x.type!=="open"))}if(j.a.length!==q.length)throw 0;const answers={};
@@ -675,6 +681,7 @@ function decode(txt){let m=txt.match(/AO2:(\{[\s\S]*\})/);
 function renderDone(){const rec=window._last;let body;
  if(saveState==="saving")body=`<p class="mut">${L("Нәтиже сақталып жатыр…","Сохраняем результат…")}</p>`;
  else if(saveState==="sent"){const msg=waMsg(window._last);body=`<p>${L("Хабарламаны WhatsApp-та жібердіңіз бе? Жіберсеңіз — бәрі дайын, біз сізбен жақында хабарласамыз.","Вы отправили сообщение в WhatsApp? Если да — всё готово, мы скоро с вами свяжемся.")}</p><p class="mut" style="font-size:13px">${L("WhatsApp ашылмаса, мына мәтінді көшіріп, +7 777 019 88 00 нөміріне жіберіңіз:","Если WhatsApp не открылся, скопируйте текст и отправьте на номер +7 777 019 88 00:")}</p><textarea readonly rows="4" style="font-size:12px" onclick="this.select()">${esc(msg)}</textarea><div style="margin-top:14px"><button class="btn ghost" onclick="step='review';render()">← ${L("Қайта жіберу","Отправить ещё раз")}</button></div>`}
+ else if(saveState==="sheet")body=`<p>${L("Анкетаңыз бен жауаптарыңыз бізге жіберілді. Біз сізбен жақында хабарласамыз.","Ваша анкета и ответы отправлены. Мы скоро с вами свяжемся.")}</p><p class="mut" style="font-size:14px">${L("Сұрағыңыз болса, WhatsApp-қа жазыңыз: +7 777 019 88 00","Если есть вопросы — пишите в WhatsApp: +7 777 019 88 00")}</p><div style="margin-top:14px"><a class="btn ghost" href="/">← ${L("Сайтқа оралу","Вернуться на сайт")}</a></div>`;
  else if(saveState==="ok")body=`<p>${L("Анкетаңыз бен нәтижеңіз сақталды. Біз сізбен жақында хабарласамыз.","Ваша анкета и результат сохранены. Мы скоро с вами свяжемся.")}</p>`;
  else{const msg=`ALTYN ORDA · ${L(ROLES[rec.role].kz,ROLES[rec.role].ru)}\n${rec.name} · ${rec.phone}\n${L("Төмендегі кодты өзгертпеңіз","Не меняйте код ниже")}:\n${code(rec)}`;
   const href="https://wa.me/"+WA_NUMBER+"?text="+encodeURIComponent(msg);
