@@ -271,7 +271,7 @@ footer b{color:#fff;font-family:Montserrat,Inter,sans-serif;font-weight:900}
     <li data-kz="Біз сізге жеке сілтеме жібереміз." data-ru="Мы пришлём вам персональную ссылку.">Біз сізге жеке сілтеме жібереміз.</li>
     <li data-kz="Сол сілтемені достарыңызға жіберіңіз. Досыңыз сілтеме арқылы тіркеліп, 1 000 ₸-ден сатып алса, екеуіңізге де 500 бонус түседі." data-ru="Отправьте ссылку друзьям. Если друг зарегистрируется по ссылке и купит от 1 000 ₸, вы оба получите по 500 бонусов.">Сол сілтемені достарыңызға жіберіңіз. Досыңыз сілтеме арқылы тіркеліп, 1 000 ₸-ден сатып алса, екеуіңізге де 500 бонус түседі.</li>
    </ol>
-   <a class="btn wa" href="https://wa.me/altynordakurmangazy" target="_blank" rel="noopener" data-kz="💬 WhatsApp-қа жазу" data-ru="💬 Написать в WhatsApp">💬 WhatsApp-қа жазу</a>
+   <a class="btn wa" href="https://wa.me/altynordakurmangazy?text=%D0%A0%D0%B5%D1%84%D0%B5%D1%80%D0%B0%D0%BB%D0%B4%D1%8B%D2%9B%20%D0%B1%D0%B0%D2%93%D0%B4%D0%B0%D1%80%D0%BB%D0%B0%D0%BC%D0%B0%D2%93%D0%B0%20%D2%9B%D0%BE%D1%81%D1%8B%D0%BB%D2%93%D1%8B%D0%BC%20%D0%BA%D0%B5%D0%BB%D0%B5%D0%B4%D1%96" data-href-kz="https://wa.me/altynordakurmangazy?text=%D0%A0%D0%B5%D1%84%D0%B5%D1%80%D0%B0%D0%BB%D0%B4%D1%8B%D2%9B%20%D0%B1%D0%B0%D2%93%D0%B4%D0%B0%D1%80%D0%BB%D0%B0%D0%BC%D0%B0%D2%93%D0%B0%20%D2%9B%D0%BE%D1%81%D1%8B%D0%BB%D2%93%D1%8B%D0%BC%20%D0%BA%D0%B5%D0%BB%D0%B5%D0%B4%D1%96" data-href-ru="https://wa.me/altynordakurmangazy?text=%D0%A5%D0%BE%D1%87%D1%83%20%D0%BF%D0%BE%D0%B4%D0%BA%D0%BB%D1%8E%D1%87%D0%B8%D1%82%D1%8C%D1%81%D1%8F%20%D0%BA%20%D1%80%D0%B5%D1%84%D0%B5%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B9%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B5" target="_blank" rel="noopener" data-kz="💬 Рефералдық бағдарламаға қосылғым келеді" data-ru="💬 Хочу подключиться к реферальной программе">💬 Рефералдық бағдарламаға қосылғым келеді</a>
    <p class="small" data-kz="Сілтеме 1 ай жарамды. Шақыру бонусы бір рет беріледі." data-ru="Ссылка действует 1 месяц. Бонус за приглашение начисляется один раз.">Сілтеме 1 ай жарамды. Шақыру бонусы бір рет беріледі.</p>
   </div>
  </div>
@@ -373,6 +373,7 @@ footer b{color:#fff;font-family:Montserrat,Inter,sans-serif;font-weight:900}
  var lang='kz';try{lang=localStorage.getItem('ao-lang')||'kz'}catch(e){}
  function apply(l){lang=l;document.documentElement.lang=l==='kz'?'kk':'ru';
   document.querySelectorAll('[data-kz]').forEach(function(el){el.innerHTML=el.getAttribute('data-'+l)});
+  document.querySelectorAll('[data-href-kz]').forEach(function(el){el.href=el.getAttribute('data-href-'+l)});
   document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===l)});
   document.title=l==='kz'?'ALTYN ORDA — отбасылық киім дүкені, Құрманғазы':'ALTYN ORDA — семейный магазин одежды, Курмангазы';
   try{localStorage.setItem('ao-lang',l)}catch(e){}}
